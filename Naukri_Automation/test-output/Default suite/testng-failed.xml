@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="limiting_Driver.Nauckri2">
+      <class name="testCases.Naukri_TestCases">
         <methods>
           <include name="naukriTest"/>
         </methods>
-      </class> <!-- limiting_Driver.Nauckri2 -->
+      </class> <!-- testCases.Naukri_TestCases -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

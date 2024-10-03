@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -35,9 +36,9 @@ public class Base_Class {
 
 	public static WebDriver driver;
 	public static String url;
-	public static String firstName;
-	public static String lastName;
-	public static String email;
+	public static String skillset;
+	public static String experience;
+	public static String locations;
 	public static String userName;
 	public static String password;
 
@@ -45,16 +46,17 @@ public class Base_Class {
 	public static void properties() {
 
 		try {
-			FileInputStream stream = new FileInputStream("config.properties");
+			FileInputStream stream = new FileInputStream("config1.properties");
 			Properties prop = new Properties();
 			prop.load(stream);
 
 			url = prop.getProperty("URL");
-			firstName = prop.getProperty("FirstName");
-			lastName = prop.getProperty("Lastname");
-			email = prop.getProperty("email");
 			userName = prop.getProperty("UserName");
 			password = prop.getProperty("Password");
+			skillset=prop.getProperty("Skillset");
+			experience=prop.getProperty("Experience");
+			locations=prop.getProperty("Locations");
+			
 
 		} catch (FileNotFoundException e) {
 			System.out.println("FileNotFoundException");
@@ -66,24 +68,14 @@ public class Base_Class {
 
 	// browser_Launch_Chrome
 	public static  WebDriver browser_Launch_Chrome() {
-		
-			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
-			System.out.println("Chrome Launched Successfully");
 			return driver;
-			
-			
-		
-
 	}
 	
 	public static WebDriver browser_Launch_Edge() {
-		
 		WebDriverManager.edgedriver().setup();
 		driver = new EdgeDriver();
 		return driver;
-	
-
 }
 
 	// browser_Launch_Firefox
@@ -111,7 +103,7 @@ public class Base_Class {
 	}
 
 	// get_url
-	public static void get_Url(WebDriver driver , String link) {
+	public static void get_Url(String link) {
 		driver.get(link);
 	}
 
@@ -139,9 +131,11 @@ public class Base_Class {
 	// sendkeys 2
 	public static void input_Value_2(String locator, String username) {
 		driver.findElement(By.id(locator)).sendKeys(username);
-
 	}
-
+	
+	//findelements_Xpath
+	
+	
 	// click
 	public static void clicks(WebElement clickin) {
 		clickin.click();
@@ -222,6 +216,11 @@ public class Base_Class {
 	public static void drop(WebElement dropdown, String value) {
 		Select s = new Select(dropdown);
 		s.selectByValue(value);
+	}
+	
+	public static void drop_Select_By_Visible_Text(WebElement dropdown, String value) {
+		Select s = new Select(dropdown);
+		s.selectByVisibleText(value);
 	}
 
 	// drop_down

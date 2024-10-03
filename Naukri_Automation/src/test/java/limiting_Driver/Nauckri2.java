@@ -14,86 +14,79 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
+import baseClass.Base_Class;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pom.Home_Page;
+import pom.Login_page;
 
-public class Nauckri2 {
-	public static WebDriver driver;
-	public static WebElement companyList;
-	public static String[] keyWords;
-
-	@Test
-	public static void naukriTest() throws Throwable {
-		browser_Launch();
-		naukri_Login();
-		search_Job();
-		limiting_Driver();
-		clicking_Links();
-		
-		for (int i = 0; i <= 1; i++) {
-			windowHandles();
-			clickNext();
-			limiting_Driver();
-			clicking_Links();
-		}
-		page_Title();
-	}
+public class Nauckri2 extends Base_Class {
+	public static WebElement jobList;
 
 	public static void browser_Launch() {
-		driver = new ChromeDriver();
-		driver.get("https://www.naukri.com/nlogin/login");
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		try {
+			browser_Launch_Chrome();
+			maximize();
+			properties();
+			get_Url(url);
+			waitimp(15);
+			System.out.println("Browser Launched Successfully");
+		} catch (Exception e) {
+			System.out.println("Browser Launched Fail");
+		}
 	}
 
 	public static void naukri_Login() {
-		driver.findElement(By.id("usernameField")).sendKeys("UserName");
-		driver.findElement(By.id("passwordField")).sendKeys("Password");
-		driver.findElement(By.xpath("(//*[text()='Login'])[3]")).click();
+		Login_page login = new Login_page(driver);
+		try {
+			input_Value(login.getUsername(), userName);
+			input_Value(login.getPassword(), password);
+			clicks(login.getLoginbutton());
+			System.out.println("User Logedin Successfully");
+		} catch (Exception e) {
+			System.out.println("Login Failed");
+		}
 	}
 
 	public static void search_Job() throws InterruptedException {
 		Thread.sleep(2000);
-		driver.findElement(By.cssSelector("span.nI-gNb-sb__placeholder")).click();
-		driver.findElement(By.xpath("(//input[@class='suggestor-input '])[1]")).sendKeys(
-				"SkillSet");
-		WebElement experiece = driver.findElement(By.id("experienceDD"));
-		experiece.click();
-		driver.findElement(By.xpath("//*[text()='4 years']")).click();
-		driver.findElement(By.xpath("(//input[@class='suggestor-input '])[2]"))
-				.sendKeys("Locations");
-		driver.findElement(By.xpath("//*[text()='Search']")).click();
+		Home_Page home = new Home_Page(driver);
+		try {
+			clicks(home.getSearch_Job_Here());
+			input_Value(home.getSkillset(), skillset);
+			clicks(home.getExperience_Dropdown());
+			clicks(home.getYears_Of_Experience());
+			input_Value(home.getLocations(), locations);
+			clicks(home.getSearch_Button());
+			
+			//WFH
+			clicks(home.getWFH_Checkbox());
+			Thread.sleep(3000);
+			//Hybrid
+			clicks(home.getHybrid_Checkbox());
+			Thread.sleep(3000);
+			//Remote
+			clicks(home.getRemote_Checkbox());
+		} catch (Exception e) {
+			System.out.println("User not able to job search");
+		}
 
-		// wfo
-		 driver.findElement(By.xpath("//*[text()='Work from office']")).click();
-		 Thread.sleep(2000);
-		// hybrid
-		driver.findElement(By.xpath("//*[text()='Hybrid']")).click();
-		Thread.sleep(2000);
-		// remote
-		driver.findElement(By.xpath("//*[text()='Remote']")).click();
-		Thread.sleep(2000);
-		//Temp. WFH due to covid
-		//driver.findElement(By.xpath("//*[text()='Temp. WFH due to covid']")).click();
 	}
 
 	public static void limiting_Driver() throws InterruptedException {
 		Thread.sleep(1000);
-
-		companyList = driver.findElement(By.xpath("//body/div[1]/div/main/div/div[2]/div[2]/div"));
-		System.out.println(companyList.findElements(By.xpath("//main/div/div[2]/div[2]/div/div/div/div[1]/a")).size());
-
+		Home_Page home = new Home_Page(driver);
+		jobList=home.getJob_List();
 	}
 
 	public static void clicking_Links() throws Throwable {
-
-		List<WebElement> companyLinks = companyList
-				.findElements(By.xpath("//main/div/div[2]/div[2]/div/div/div/div[1]/a"));
+		Home_Page home = new Home_Page(driver);
+		List<WebElement> companyLinks=jobList.findElements(By.xpath("//main/div/div[2]/div[2]/div/div/div/div[1]/a"));
+		
 		for (int i = 0; i < companyLinks.size(); i++) {
 			Thread.sleep(1000);
 			String keys = Keys.chord(Keys.CONTROL, Keys.ENTER);
 			companyLinks.get(i).sendKeys(keys);
 			Thread.sleep(1000);
-
 		}
 	}
 
@@ -105,8 +98,8 @@ public class Nauckri2 {
 	}
 
 	public static void clickNext() throws Throwable {
-					driver.findElement(By.xpath("//*[text()='Next']")).click();
-			Thread.sleep(3000);
+		Home_Page home = new Home_Page(driver);
+		clicks(home.getNext_Button());
 		
 	}
 
