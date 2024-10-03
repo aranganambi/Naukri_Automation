@@ -2,9 +2,10 @@ package testCases;
 
 import org.testng.annotations.Test;
 
-import limiting_Driver.Nauckri2;
+import limiting_Driver.Nauckri_Automation;
+import limiting_Driver.Nauckri_Automation;
 
-public class Naukri_TestCases extends Nauckri2 {
+public class Naukri_TestCases extends Nauckri_Automation {
 	@Test
 	public static void naukriTest() throws Throwable {
 		browser_Launch();

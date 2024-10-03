@@ -19,7 +19,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import pom.Home_Page;
 import pom.Login_page;
 
-public class Nauckri2 extends Base_Class {
+public class Nauckri_Automation extends Base_Class {
 	public static WebElement jobList;
 
 	public static void browser_Launch() {
