@@ -28,7 +28,7 @@ public class Nauckri2 extends Base_Class {
 			maximize();
 			properties();
 			get_Url(url);
-			waitimp(15);
+			waitimp(10);
 			System.out.println("Browser Launched Successfully");
 		} catch (Exception e) {
 			System.out.println("Browser Launched Fail");
